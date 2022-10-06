@@ -11,6 +11,8 @@ public class generator_pattern {
 
         Integer num1, num2, num3, num4, num5, num6, num7;
 
+        System.out.print("\n");
+
         System.out.print("Number 1: ");
         num1 = input.nextInt();
         list.add(0, num1);
@@ -35,15 +37,21 @@ public class generator_pattern {
         num6 = input.nextInt();
         list.add(5, num6);
        
+        System.out.print("_________________________\n");
+
+        System.out.print("Bonus : ");
+        num7 = input.nextInt();
+        list.add(6, num7);
+       
         return list;
     }
 
     // Patten one
 
-    public static ArrayList<Integer> pattern_one(){
+    public static ArrayList<Integer> pattern_one(ArrayList<Integer> alist){
         ArrayList<Integer> newList = new ArrayList<>();
         ArrayList<Integer> list_No_Duplicates = new ArrayList<>();
-        ArrayList<Integer> alist = getNumbers();
+        //ArrayList<Integer> alist = getNumbers();
 
         Integer sum =  0;
 
@@ -55,7 +63,7 @@ public class generator_pattern {
             newList.add(0, sum);
         }
         
-        for (Integer index = 2; index < alist.size(); index++) {
+        for (Integer index = 2; index < alist.size()-1; index++) {
             //sum = sum + alist.get(index);
             sum = newList.get(newList.size() - 1) + alist.get(index);
 
@@ -76,10 +84,23 @@ public class generator_pattern {
         return list_No_Duplicates;
     }
     
-    // pattern twof
-    public static void main(String[] args) {
-        System.out.print("\n");
-        System.out.println("Pattern one : " + pattern_one());
+    // pattern two
+    public static ArrayList<Integer> pattern_two(ArrayList<Integer> alist) {
+        ArrayList<Integer> newList = new ArrayList<>();
+        ArrayList<Integer> inputList = alist;
+        int bonus = inputList.get(inputList.size() - 1);
         
+        for (Integer index = 0; index < inputList.size() - 1; index++) {
+            newList.add(Math.abs(bonus - inputList.get(index)));
+        }
+
+        Collections.sort(newList);
+        
+        return newList;
+    }
+    public static void main(String[] args) {
+        ArrayList<Integer> alist = getNumbers();
+        System.out.println("\nPattern one : " + pattern_one(alist));
+        System.out.println("Pattern two : " + pattern_two(alist));        
     }
 }
