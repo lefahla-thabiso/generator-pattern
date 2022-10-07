@@ -39,7 +39,7 @@ public class generator_pattern {
        
         System.out.print("_________________________\n");
 
-        System.out.print("Bonus : ");
+        System.out.print("last : ");
         num7 = input.nextInt();
         list.add(6, num7);
        
@@ -89,18 +89,133 @@ public class generator_pattern {
         ArrayList<Integer> newList = new ArrayList<>();
         ArrayList<Integer> inputList = alist;
         int bonus = inputList.get(inputList.size() - 1);
-        
+
         for (Integer index = 0; index < inputList.size() - 1; index++) {
             newList.add(Math.abs(bonus - inputList.get(index)));
         }
 
         Collections.sort(newList);
+
+        return newList;
+    }
+    // pattern 3
+    public static Character homeConversion(Character digit) {
+        if (digit.equals('1')) {
+            return '6';
+        }else  if (digit.equals('2')) {
+            return '7';
+        }else  if (digit.equals('3')) {
+            return '8';
+        }else  if (digit.equals('4')) {
+            return '9';
+        }else if (digit.equals('6')) {
+            return '1';
+        }else  if (digit.equals('7')) {
+            return '2';
+        }else  if (digit.equals('8')) {
+            return '3';
+        }else  if (digit.equals('9')) {
+            return '4';
+        }else  if (digit.equals('5')) {
+            return '0';
+        } else {
+            return '5';
+        }
+    }
+
+    public static Integer getCharIndex(Integer digit) {
+        if (digit.equals(1)) {
+            return 6;
+        }else  if (digit.equals(2)) {
+            return 7;
+        }else  if (digit.equals(3)) {
+            return 8;
+        } else if (digit.equals(4)) {
+            return 9;
+        } else if (digit.equals(5)) {
+            return 0;
+        } else if (digit.equals(6)) {
+            return 1;
+        } else if (digit.equals(7)) {
+            return 2;
+        } else if (digit.equals(8)) {
+            return 3;
+        }  else if (digit.equals(9)) {
+            return 4;
+        } else {
+            return 5;
+        }  
+    }
+    public static  Integer homeValue(int Number, int first_digit_or_second) {
+        Integer homeNumber = 0;
+        Character homeDigit = ' ';// = 0;
+        String homeString;
+        Character digitChar;
         
+        homeString = String.valueOf(Number);
+
+        StringBuilder stringBuilder = new StringBuilder(homeString);
+       // if (homeString.length() > 2) {
+            if (first_digit_or_second == 1) {
+            digitChar = homeString.charAt(0);
+            homeDigit = homeConversion(digitChar);
+            stringBuilder.setCharAt(0,(char) homeDigit);
+        } else {
+            //System.out.println(homeString);
+            // if (homeString.length() == 1) {
+                digitChar = homeString.charAt(1);
+            // } else {
+            //     digitChar = homeString.charAt(0);
+            // }
+            
+            homeDigit = homeConversion(digitChar);
+            stringBuilder.setCharAt(1,(char) homeDigit);
+        }
+               
+        homeNumber = Integer.parseInt(stringBuilder.toString());
+        //}
+         
+        
+        return homeNumber;
+    }
+    
+    public static ArrayList<Integer> pattern_three(ArrayList<Integer> aList) {
+        ArrayList<Integer> newList = new ArrayList<>();
+        ArrayList<Integer> inputeList = aList;
+         
+       // Integer indexList = 0;
+        for (Integer index = 0; index < inputeList.size() - 1; index++) {
+            newList.add(inputeList.get(index) * 2);
+        }
+
+        for (Integer index = 0; index < newList.size(); index++) {
+            if (newList.get(index) > 49) {
+                newList.set(index, homeValue(newList.get(index), 1));
+            }
+        }
+
+        
+        for (Integer index = 0; index < newList.size(); index++) {
+            for (Integer indexj = index + 1; indexj < newList.size() - 1; indexj++) {
+                if (newList.get(index) == newList.get(indexj)) {
+                    if (newList.get(indexj) < 10) {
+                         newList.set(indexj, getCharIndex(newList.get(indexj)));
+                        
+                    } else {
+                    newList.set(indexj, homeValue(newList.get(indexj), 2));
+                        
+                    }
+
+                }
+            }
+        }
+        //Collections.sort(newList);
         return newList;
     }
     public static void main(String[] args) {
         ArrayList<Integer> alist = getNumbers();
         System.out.println("\nPattern one : " + pattern_one(alist));
-        System.out.println("Pattern two : " + pattern_two(alist));        
+        System.out.println("Pattern two : " + pattern_two(alist));
+        System.out.println("Pattern three : " + pattern_three(alist));              
     }
 }
